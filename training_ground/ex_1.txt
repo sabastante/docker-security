@@ -1,0 +1,11 @@
+Ejercicio 1: Corriendo nuestra primera imagen de Docker
+
+1. Instalar Docker
+2. Bajar la imagen de NGINX
+3. Correr la imagen de NGINX
+4. Crear un index.html para el nuevo NGINX
+5. Correr nuevamente el NGINX con la página nueva
+6. Acceder a la página web creada
+
+
+Comandos de solución:

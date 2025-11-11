@@ -1,0 +1,11 @@
+Ejercicio 3: Usando Registros - DockerHub
+
+1. Registrarse en DockerHub
+2. Logearse en la terminal a su registro
+3. Buildear la imagen local
+4. Tagear la imagen
+5. Subirla al DockerHub
+6. Compartirla con un compañer@
+7. Correr la imagen de un compañero
+
+Comandos de solución:

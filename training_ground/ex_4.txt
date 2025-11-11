@@ -1,0 +1,11 @@
+Ejercicio 4: Docker como facilitador del día a día
+
+1. Buscar una herramienta que uses en tu día a día
+2. Ver si existe una versión “dockerizada”
+3. Correr la versión dockerizada de la tool:
+  a. OpenVAS
+  b. OWASZAP
+  c. Suricata
+  d. Ollama
+
+4. Correr un escaneo de Trivi, desde su imagen de docker a la tool que estamos usando.

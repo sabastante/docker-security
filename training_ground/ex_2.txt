@@ -1,0 +1,12 @@
+Ejercicio 2: Creando una imágen custom
+
+1. Crear una API Mínima en el lenguaje que vos quieras
+2. Crear un Dockerfile Seguro
+3. Buildear la imagen 
+4. Correr la imagen creada, exponiendo la API en nuestro local.
+5. Hacer un curl a la imagen para ver el resultado
+6. EXTRA: Probar con tools como POSTMAN
+
+
+Comandos de solución:
+
