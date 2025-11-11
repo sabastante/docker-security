@@ -1,4 +1,7 @@
-# Introducción al Curso: Fundamentos de Docker
+# Seguridad en Docker y Kubernetes
+
+---
+## Introducción al Curso:
 
 Este curso está diseñado como una introducción práctica a Docker, orientado a ingenieros, desarrolladores, analistas y personal de seguridad que necesiten comprender cómo empaquetar, distribuir y ejecutar aplicaciones en entornos modernos. El objetivo principal es que, al finalizar, puedas **construir contenedores**, **ejecutarlos**, **entender cómo funcionan internamente** y aplicar **buenas prácticas de seguridad** en el proceso.
 
