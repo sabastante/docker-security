@@ -1,0 +1,47 @@
+DEMO 6 - k8s IAM
+kubectl create namespace team-a
+kubectl create namespace team-b
+kubectl create serviceaccount demo-user -n team-a
+kubectl get serviceaccount -n team-a
+kubectl apply -f role-team-a.yaml
+
+kubectl create rolebinding demo-user-binding \
+  --role=team-a-readwrite \
+  --serviceaccount=team-a:demo-user \
+  -n team-a
+
+kubectl create token demo-user -n team-a
+
+- Using the token
+
+kubectl config set-credentials sa-user --token= --kubeconfig=sa.kubeconfig
+kubectl config set-cluster kind-eko --server=https://127.0.0.1:45271 --certificate-authority=ca.crt --embed-certs=true --kubeconfig=sa.kubeconfig
+kubectl config set-context sa --cluster=kind-eko --user=sa-user --namespace=team-a --kubeconfig=sa.kubeconfig
+kubectl config use-context sa --kubeconfig=sa.kubeconfig
+kubectl --kubeconfig=sa.kubeconfig get pods -n team-a
+
+DEMO 7: Running Nginx in k8s
+
+7.1 Basic NGINX 
+
+kubectl create deployment nginx --image=nginx:stable --port=80
+kubectl expose deployment nginx --port=80 --target-port=80 --name=nginx-service
+kubectl port-forward svc/nginx-service 8080:80
+
+kubectl delete deployment nginx
+
+7.2 Deployment with YAML
+
+kubectl apply -f nginx.yaml
+
+7.3 Complete deployment
+podman tag 5b85e7a72df7 sabastante/eko-k8s:1.0.0
+push to docker registry
+
+7.4 Scaling up and rolling release
+
+podman build -t eko-k8s:1.0.2 .
+podman tag {image} sabastante/eko-k8s:1.0.2
+push to docker registry
+
+kubectl set image deployment/api api=sabastante/eko-k8s:1.0.1
